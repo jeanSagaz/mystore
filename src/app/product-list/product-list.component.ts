@@ -5,6 +5,7 @@ import {map, startWith} from 'rxjs/operators';
 
 import { products } from '../products';
 import { User } from '../models/user';
+import { async } from 'q';
 
 @Component({
   selector: 'app-product-list',
@@ -23,8 +24,8 @@ export class ProductListComponent implements OnInit {
   products = products;
   constructor() { }
 
-  ngOnInit() {
-      this.filteredOptions = this.myControl.valueChanges
+  async ngOnInit() {
+      this.filteredOptions = await this.myControl.valueChanges
         .pipe(
           startWith(''),
           map(value => typeof value === 'string' ? value : value.name),
