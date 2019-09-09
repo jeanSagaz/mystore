@@ -1,0 +1,43 @@
+<h2>Products</h2>
+
+<form class="example-form">
+  <mat-form-field class="example-full-width">
+    <!-- <input type="text" 
+      matInput 
+      [formControl]="myControl"> -->
+    <input type="text" 
+      placeholder="Assignee" 
+      aria-label="Assignee" 
+      matInput 
+      [formControl]="myControl" 
+      [matAutocomplete]="auto">
+    <mat-autocomplete 
+      #auto="matAutocomplete" 
+      [displayWith]="displayFn">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+          {{option.name}}
+        </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</form>
+
+<div *ngFor="let product of products; index as productId">
+  <h3>
+      <a [title]="product.name + ' details'" [routerLink]="['/products', productId]">
+      {{ product.name }}
+    </a>
+  </h3>
+
+  <p *ngIf="product.description">
+    Description: {{ product.description }}
+  </p>
+
+  <button (click)="share()">
+    Share
+  </button>
+  
+  <app-product-alerts
+    [product]="product" 
+    (notify)="onNotify()">
+  </app-product-alerts>
+</div>
